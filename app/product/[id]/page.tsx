@@ -1,13 +1,15 @@
-import { useRouter } from "next/router";
+'use client'
+import { useParams } from "next/navigation";
 
 const ProductDetail = () => {
-  const router = useRouter();
-  const { id } = router.query;
+  const params = useParams();
+  const id = params.id;
 
   return (
-    <div>
+    <div className="flex justify-center items-center h-screen">
       <h1>Chi tiết sản phẩm ID: {id}</h1>
-      {/* Chi tiết sản phẩm */}
+      
+        {/* Chi tiết sản phẩm */}
     </div>
   );
 };

@@ -7,14 +7,15 @@ export default function Navbar() {
   const [submenuOpen, setSubmenuOpen] = useState<null | string>(null);
 
   return (
-    <nav className="bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 fixed top-0 left-0 w-full z-10 shadow">
+    <nav className="bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between h-16 items-center">
           {/* Logo */}
           <div className="flex items-center">
-            <img src="/img/logo.png" className="h-10 w-10 mr-3" />
+            <img src="/img/logo.png" className="h-10 w-10 mr-3" alt="HABIO Shop" />
             <span className="text-white text-2xl font-bold">HABIO SHOP</span>
           </div>
+
           {/* Menu */}
           <div className="flex space-x-5">
             <Link
@@ -23,7 +24,8 @@ export default function Navbar() {
             >
               Trang chủ
             </Link>
-            {/* Dropdown sản phẩm */}
+
+            {/* Dropdown Sản phẩm */}
             <div
               className="relative"
               onMouseEnter={() => setDropdownOpen(true)}
@@ -35,11 +37,12 @@ export default function Navbar() {
               <button className="text-white px-3 py-2 rounded transition hover:text-fuchsia-200 hover:bg-white/10 flex items-center">
                 Sản phẩm
               </button>
+              {/* Dropdown Menu */}
               {dropdownOpen && (
-                <div className="absolute left-0 top-full w-56 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white rounded-2xl shadow-2xl z-20 border border-indigo-200">
+                <div className="absolute left-0 top-full w-56 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white rounded-2xl shadow-2xl z-50 border border-indigo-200">
                   {/* Sneaker có submenu */}
                   <div
-                    className="relative"
+                    className="relative group"
                     onMouseEnter={() => setSubmenuOpen("sneaker")}
                     onMouseLeave={() => setSubmenuOpen(null)}
                   >
@@ -59,9 +62,9 @@ export default function Navbar() {
                         />
                       </svg>
                     </button>
-                    {/* Submenu cho sneaker */}
+                    {/* Submenu cho Sneaker */}
                     {submenuOpen === "sneaker" && (
-                      <div className="absolute left-full top-0 w-48 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white shadow-lg rounded-xl z-30 border border-indigo-200">
+                      <div className="absolute left-full top-0 w-48 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white shadow-lg rounded-xl z-50 border border-indigo-200">
                         <Link
                           href="/shoes/sneakers/men"
                           className="block px-4 py-2 rounded transition hover:bg-white/10 hover:text-fuchsia-200"
@@ -80,7 +83,7 @@ export default function Navbar() {
 
                   {/* Sandal có submenu */}
                   <div
-                    className="relative"
+                    className="relative group"
                     onMouseEnter={() => setSubmenuOpen("sandal")}
                     onMouseLeave={() => setSubmenuOpen(null)}
                   >
@@ -101,7 +104,7 @@ export default function Navbar() {
                       </svg>
                     </button>
                     {submenuOpen === "sandal" && (
-                      <div className="absolute left-full top-0 w-48 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white shadow-lg rounded-xl z-30">
+                      <div className="absolute left-full top-0 w-48 bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white shadow-lg rounded-xl z-50">
                         <Link
                           href="/shoes/sandals/men"
                           className="block px-4 py-2 rounded transition hover:bg-white/10 hover:text-fuchsia-200"
@@ -128,12 +131,16 @@ export default function Navbar() {
                 </div>
               )}
             </div>
+
+            {/* Giới thiệu */}
             <Link
               href="/about"
               className="text-white px-3 py-2 rounded transition hover:text-fuchsia-200 hover:bg-white/10"
             >
               Giới thiệu
             </Link>
+
+            {/* Liên hệ */}
             <Link
               href="/contact"
               className="text-white px-3 py-2 rounded transition hover:text-fuchsia-200 hover:bg-white/10"
