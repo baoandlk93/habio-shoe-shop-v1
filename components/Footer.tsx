@@ -9,7 +9,8 @@ export default function Footer() {
           <div>
             <img src="/img/logo.png" alt="HABIO Shop" className="h-12 mb-3" />
             <p className="text-sm">
-              HABIO SHOP - nơi bạn tìm thấy những đôi giày hoàn hảo, mang lại phong cách và sự thoải mái cho bạn.
+              HABIO SHOP - nơi bạn tìm thấy những đôi giày hoàn hảo, mang lại
+              phong cách và sự thoải mái cho bạn.
             </p>
           </div>
 
