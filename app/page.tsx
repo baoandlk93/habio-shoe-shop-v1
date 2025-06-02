@@ -1,6 +1,7 @@
 import Carousel from "@/components/Carousel";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import Navbar from "@/components/Navbar";
 const slides = [
   {
     id: 1,
@@ -80,7 +81,6 @@ export default function HomePage() {
   return (
     <>
       <Navbar />
-
       <main className="min-h-screen bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 pt-16">
         <Carousel slides={slides} />
         <section className="py-12 text-center bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 text-white">

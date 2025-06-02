@@ -1,8 +1,8 @@
 // components/AdminNavbar.jsx
-
+import { User } from "@/server/entity";
 import Link from "next/link";
 
-export default function AdminNavbar({ user }: { user: any }) {
+export default function AdminNavbar({ user }: { user: User }) {
   return (
     <header className="w-full h-16 px-6 flex items-center justify-between bg-white/80 shadow sticky top-0 z-20 backdrop-blur">
       {/* Logo hoặc tên hệ thống */}
@@ -17,7 +17,7 @@ export default function AdminNavbar({ user }: { user: any }) {
         {/* Hiển thị avatar và tên người dùng nếu có */}
         <div className="flex items-center gap-2">
           <img
-            src={user?.avatar || "/default-avatar.png"}
+            src="/default-avatar.png"
             alt="avatar"
             className="w-8 h-8 rounded-full object-cover"
           />

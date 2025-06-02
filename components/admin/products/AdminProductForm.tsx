@@ -1,13 +1,13 @@
 "use client";
 import { useState, useEffect } from "react";
-
+import { Product } from "@/server/entity";
 export default function AdminProductForm({
   initialData,
   onSubmit,
   onClose,
 }: {
-  initialData?: any;
-  onSubmit: (data: any) => void;
+  initialData: Product | null;
+  onSubmit: (data: Product) => void;
   onClose: () => void;
 }) {
   const [name, setName] = useState("");
@@ -17,7 +17,7 @@ export default function AdminProductForm({
   useEffect(() => {
     if (initialData) {
       setName(initialData.name || "");
-      setPrice(initialData.price || "");
+      setPrice(initialData.price.toString() || "");
       setImage(initialData.image || "");
     } else {
       setName("");
@@ -28,7 +28,8 @@ export default function AdminProductForm({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSubmit({ name, price, image });
+    const id = initialData?.id || 0;
+    onSubmit({ id, name, price: Number(price), image });
   };
 
   return (

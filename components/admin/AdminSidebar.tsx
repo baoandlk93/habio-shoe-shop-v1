@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { CiSettings, CiUser } from "react-icons/ci";
+import { CiSettings } from "react-icons/ci";
 export default function AdminSidebar() {
   return (
     <aside className="w-60  min-h-screen bg-gradient-to-b from-blue-500 to-fuchsia-500 text-white shadow-md flex flex-col justify-between px-4 py-8">

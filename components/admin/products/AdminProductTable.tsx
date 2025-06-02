@@ -1,10 +1,13 @@
 // components/AdminProductTable.jsx
+import { Product } from "@/server/entity";
 export default function AdminProductTable({
   products,
   onEdit,
+  onDelete,
 }: {
-  products: any[];
-  onEdit: (product: any) => void;
+  products: Product[];
+  onEdit: (product: Product) => void;
+  onDelete: (id: number) => void;
 }) {
   // products là danh sách sản phẩm từ props hoặc fetch
   return (
@@ -15,7 +18,6 @@ export default function AdminProductTable({
             <th>STT</th>
             <th>Tên</th>
             <th>Giá</th>
-            <th>Số lượng</th>
             <th>Hình</th>
             <th></th>
           </tr>
@@ -27,7 +29,6 @@ export default function AdminProductTable({
               <td>{index + 1}</td>
               <td>{product.name}</td>
               <td>{product.price}</td>
-              <td>{product.quantity}</td>
               <td>
                 <img src={product.image} alt={product.name} className="h-8" />
               </td>
@@ -37,6 +38,12 @@ export default function AdminProductTable({
                   className="px-2 py-1 bg-green-500 text-white rounded"
                 >
                   Sửa
+                </button>
+                <button
+                  onClick={() => onDelete(product.id)}
+                  className="px-2 py-1 bg-red-500 text-white rounded"
+                >
+                  Xóa
                 </button>
               </td>
             </tr>

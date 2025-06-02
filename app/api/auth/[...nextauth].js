@@ -31,7 +31,7 @@ export const authOptions = {
     signIn: "/", // tuỳ chỉnh trang đăng nhập của bạn
   },
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session, token }) {
       // Thêm role vào session để check phân quyền phía client
       session.user.role = token.role;
       return session;

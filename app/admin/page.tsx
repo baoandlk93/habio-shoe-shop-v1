@@ -1,8 +1,8 @@
-// app/admin/page.jsx
-export default function AdminPage({ children }: { children: React.ReactNode }) {
+import Statistic from "@/components/admin/statistics/Statistic";
+export default function AdminHomePage() {
   return (
-    <div className="min-h-screen overflow-y-auto overflow-x-hidden flex bg-gray-50">
-      {children}
+    <div>
+      <Statistic />
     </div>
   );
 }
