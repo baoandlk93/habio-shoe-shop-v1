@@ -51,78 +51,105 @@ export default function AdminProductForm({
   };
 
   return (
-    <div className="flex flex-col gap-4 p-12">
-      <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-lg mx-auto animate-fadeIn">
+      <h2 className="text-2xl font-bold mb-4 text-center">
+        {initialData ? "Cập nhật sản phẩm" : "Thêm sản phẩm mới"}
+      </h2>
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block font-semibold">Tên sản phẩm</label>
+          <label className="block text-gray-700 font-medium mb-1">
+            Tên sản phẩm
+          </label>
           <input
             type="text"
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
+            placeholder="Nhập tên sản phẩm..."
           />
         </div>
         <div>
-          <label className="block font-semibold">Giá</label>
+          <label className="block text-gray-700 font-medium mb-1">Giá</label>
           <input
             type="number"
-            className="w-full border px-3 py-2 rounded"
+            min="0"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
             required
+            placeholder="Nhập giá sản phẩm..."
           />
         </div>
         <div>
-          <label className="block font-semibold">Hình ảnh (URL)</label>
+          <label className="block text-gray-700 font-medium mb-1">
+            Hình ảnh (URL)
+          </label>
           <input
             type="text"
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={image}
             onChange={(e) => setImage(e.target.value)}
             required
+            placeholder="Dán đường dẫn ảnh sản phẩm..."
           />
+          {image && (
+            <div className="mt-2 flex justify-center">
+              <img
+                src={image}
+                alt="Preview"
+                className="h-24 w-24 object-cover rounded-lg border shadow"
+              />
+            </div>
+          )}
         </div>
         <div>
-          <label className="block font-semibold">Mô tả</label>
+          <label className="block text-gray-700 font-medium mb-1">Mô tả</label>
           <textarea
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition resize-none"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             required
+            rows={3}
+            placeholder="Nhập mô tả sản phẩm..."
           />
         </div>
         <div>
-          <label className="block font-semibold">Loại</label>
+          <label className="block text-gray-700 font-medium mb-1">Loại</label>
           <input
             type="text"
-            className="w-full border px-3 py-2 rounded"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
             required
+            placeholder="Nhập loại sản phẩm..."
           />
         </div>
         <div>
-          <label className="block font-semibold">Số lượng</label>
+          <label className="block text-gray-700 font-medium mb-1">
+            Số lượng
+          </label>
           <input
             type="number"
-            className="w-full border px-3 py-2 rounded"
+            min="0"
+            className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={stock}
             onChange={(e) => setStock(e.target.value)}
             required
+            placeholder="Nhập số lượng trong kho..."
           />
         </div>
-        <div className="flex justify-end gap-2">
+        <div className="flex justify-end gap-3 pt-2">
           <button
             type="button"
             onClick={onClose}
-            className="px-4 py-2 bg-gray-200 rounded"
+            className="px-4 py-2 bg-gray-200 hover:bg-gray-300 rounded-lg font-semibold transition"
           >
             Huỷ
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded"
+            className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-semibold shadow transition"
           >
             {initialData ? "Cập nhật" : "Thêm mới"}
           </button>

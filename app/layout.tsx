@@ -4,6 +4,7 @@ import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
 import { ToastContainer } from "react-toastify";
 import { Suspense } from "react";
+import ReduxProvider from "@/store/ReduxProvider";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -30,9 +31,11 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ToastContainer />
-        <SessionWrapper>
-          <Suspense fallback={<div>Đang tải...</div>}>{children}</Suspense>
-        </SessionWrapper>
+        <ReduxProvider>
+          <SessionWrapper>
+            <Suspense fallback={<div>Đang tải...</div>}>{children}</Suspense>
+          </SessionWrapper>
+        </ReduxProvider>
       </body>
     </html>
   );

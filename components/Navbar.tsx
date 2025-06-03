@@ -6,12 +6,36 @@ import AuthForm from "./AuthForm";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import { FaShoppingCart, FaUser } from "react-icons/fa";
+import Cart from "./Cart";
+import { CartItem } from "../server/entity";
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState<null | string>(null);
   const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession();
   const router = useRouter();
+  const [cartItemCount, setCartItemCount] = useState(1);
+  const [openCartModal, setOpenCartModal] = useState(false);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+  const onUpdateQuantity = (id: number, quantity: number) => {
+    const updatedCartItems = cartItems.map((item) =>
+      item.id === id ? { ...item, quantity } : item
+    );
+    setCartItems(updatedCartItems);
+    setCartItemCount(
+      updatedCartItems.reduce((sum, item) => sum + item.quantity, 0)
+    );
+  };
+
+  const onRemove = (id: number) => {
+    const updatedCartItems = cartItems.filter((item) => item.id !== id);
+    setCartItems(updatedCartItems);
+    setCartItemCount(
+      updatedCartItems.reduce((sum, item) => sum + item.quantity, 0)
+    );
+  };
 
   useEffect(() => {
     if (session?.user) {
@@ -170,15 +194,13 @@ export default function Navbar() {
               >
                 Liên hệ
               </Link>
+
               {session?.user ? (
                 <div className="flex items-center gap-2">
                   <img
-                    src={session.user.image || "/default-avatar.png"}
+                    src={session.user.image || ""}
                     alt="Avatar"
                     className="w-8 h-8 rounded-full"
-                    onError={(e) =>
-                      (e.currentTarget.src = "/default-avatar.png")
-                    }
                     width={32}
                     height={32}
                     title={session.user.name || ""}
@@ -198,12 +220,32 @@ export default function Navbar() {
                   Đăng nhập / Đăng ký
                 </button>
               )}
+              <button
+                onClick={() => setOpenCartModal(true)}
+                className="relative flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-fuchsia-500 text-white rounded-lg shadow hover:scale-105 transition"
+              >
+                <FaShoppingCart />
+                Giỏ hàng
+                {cartItemCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-red-500 text-white rounded-full text-xs px-2 py-0.5">
+                    {cartItemCount}
+                  </span>
+                )}
+              </button>
             </div>
           </div>
         </div>
       </nav>
       <Modal open={showModal} onClose={() => setShowModal(false)}>
         <AuthForm />
+      </Modal>
+      <Modal open={openCartModal} onClose={() => setOpenCartModal(false)}>
+        <Cart
+          cartItems={cartItems}
+          onUpdateQuantity={onUpdateQuantity}
+          onRemove={onRemove}
+          setOpenCartModal={setOpenCartModal}
+        />
       </Modal>
     </>
   );
