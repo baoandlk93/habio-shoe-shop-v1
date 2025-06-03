@@ -8,7 +8,6 @@ import { Product } from "@/server/entity";
 export default function AdminProductPage() {
   const [open, setOpen] = useState(false);
   const [editData, setEditData] = useState<Product | null>(null);
-  const [products, setProducts] = useState<Product[]>([]);
 
   const handleAdd = () => {
     setEditData(null); // Không truyền dữ liệu ban đầu => thêm mới
@@ -27,26 +26,47 @@ export default function AdminProductPage() {
         name: formData.name,
         price: formData.price,
         image: formData.image,
+        description: formData.description,
+        category: formData.category,
+        stock: formData.stock,
       };
-      setProducts(
-        products.map((p) => (p.id === editData.id ? updatedProduct : p))
-      );
-      // Gọi API cập nhật sản phẩm ở đây
+      await fetch("/api/admin/products", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedProduct),
+      });
+      setOpen(false);
     } else {
       const newProduct = {
-        id: products.length + 1,
         name: formData.name,
         price: formData.price,
         image: formData.image,
+        description: formData.description,
+        category: formData.category,
+        stock: formData.stock,
       };
-      setProducts([...products, newProduct]);
-      // Gọi API thêm mới sản phẩm ở đây
+      await fetch("/api/admin/products", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newProduct),
+      });
+      setOpen(false);
     }
-    setOpen(false);
   };
 
-  const handleDelete = (id: number) => {
-    setProducts(products.filter((p) => p.id !== id));
+  const handleDelete = async (id: number) => {
+    await fetch("/api/admin/products", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
+    setOpen(false);
   };
 
   return (
@@ -58,11 +78,7 @@ export default function AdminProductPage() {
       >
         Thêm sản phẩm
       </button>
-      <AdminProductTable
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        products={products}
-      />
+      <AdminProductTable onEdit={handleEdit} onDelete={handleDelete} />
       <Modal open={open} onClose={() => setOpen(false)}>
         <AdminProductForm
           initialData={editData}

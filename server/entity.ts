@@ -12,4 +12,16 @@ export interface Product {
     name: string;
     price: number;
     image: string;
+    description: string;
+    category: string;
+    stock: number;
+}
+
+export interface Order {
+    id: number;
+    userId: string;
+    productId: number;
+    quantity: number;
+    totalPrice: number;
+    createdAt: Date;
 }

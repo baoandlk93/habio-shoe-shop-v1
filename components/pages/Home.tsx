@@ -4,7 +4,7 @@ import Carousel from "../Carousel";
 import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useEffect } from "react";
-
+import { supabaseClient } from "@/lib/supabase/client";
 type Product = {
   id: number;
   name: string;
@@ -96,6 +96,19 @@ export default function Home() {
       router.replace("/", { scroll: false });
     }
   }, [params, router]);
+  useEffect(() => {
+    // Lấy dữ liệu từ Supabase
+    const getData = async () => {
+      const { data, error } = await supabaseClient.from("product").select("*");
+      if (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+      } else {
+        console.log("Dữ liệu:", data);
+      }
+    };
+
+    getData();
+  }, []);
   return (
     <>
       <main className="min-h-screen bg-gradient-to-tr from-blue-600 via-indigo-500 to-fuchsia-500 pt-16">

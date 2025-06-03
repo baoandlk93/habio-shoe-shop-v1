@@ -13,23 +13,41 @@ export default function AdminProductForm({
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [stock, setStock] = useState("");
 
   useEffect(() => {
     if (initialData) {
       setName(initialData.name || "");
       setPrice(initialData.price.toString() || "");
       setImage(initialData.image || "");
+      setDescription(initialData.description || "");
+      setCategory(initialData.category || "");
+      setStock(initialData.stock.toString() || "");
     } else {
       setName("");
       setPrice("");
       setImage("");
+      setDescription("");
+      setCategory("");
+      setStock("");
     }
   }, [initialData]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const id = initialData?.id || 0;
-    onSubmit({ id, name, price: Number(price), image });
+    onSubmit({
+      id,
+      name,
+      price: Number(price),
+      image,
+      description,
+      category,
+      stock: Number(stock),
+    });
+    onClose();
   };
 
   return (
@@ -62,6 +80,35 @@ export default function AdminProductForm({
             className="w-full border px-3 py-2 rounded"
             value={image}
             onChange={(e) => setImage(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label className="block font-semibold">Mô tả</label>
+          <textarea
+            className="w-full border px-3 py-2 rounded"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label className="block font-semibold">Loại</label>
+          <input
+            type="text"
+            className="w-full border px-3 py-2 rounded"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          />
+        </div>
+        <div>
+          <label className="block font-semibold">Số lượng</label>
+          <input
+            type="number"
+            className="w-full border px-3 py-2 rounded"
+            value={stock}
+            onChange={(e) => setStock(e.target.value)}
             required
           />
         </div>
