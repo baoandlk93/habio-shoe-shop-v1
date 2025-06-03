@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionWrapper from "@/components/SessionWrapper";
 import { ToastContainer } from "react-toastify";
+import { Suspense } from "react";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -29,7 +30,9 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ToastContainer />
-        <SessionWrapper>{children}</SessionWrapper>
+        <SessionWrapper>
+          <Suspense fallback={<div>Đang tải...</div>}>{children}</Suspense>
+        </SessionWrapper>
       </body>
     </html>
   );

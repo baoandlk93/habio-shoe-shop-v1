@@ -173,7 +173,7 @@ export default function Navbar() {
               {session?.user ? (
                 <div className="flex items-center gap-2">
                   <img
-                    src={session.user.image}
+                    src={session.user.image || "/default-avatar.png"}
                     alt="Avatar"
                     className="w-8 h-8 rounded-full"
                     onError={(e) =>
@@ -181,7 +181,7 @@ export default function Navbar() {
                     }
                     width={32}
                     height={32}
-                    title={session.user.name}
+                    title={session.user.name || ""}
                   />
                   <button
                     onClick={() => signOut()}
