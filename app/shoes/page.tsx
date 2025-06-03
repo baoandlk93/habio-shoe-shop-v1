@@ -15,7 +15,10 @@ export default function ProductListPage() {
 
   // Load sản phẩm ban đầu
   const fetchProducts = async () => {
-    const res = await fetch("/api/products");
+    const res = await fetch("/api/products", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
     const data = await res.json();
     setProducts(data);
   };

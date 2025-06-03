@@ -1,6 +1,6 @@
 export default function Register() {
   return (
-    <form className="flex flex-col space-y-4">
+    <form className="flex flex-col space-y-4 text-black">
       <input
         type="text"
         placeholder="Họ và tên"

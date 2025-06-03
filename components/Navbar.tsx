@@ -1,13 +1,28 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Modal from "./Modal";
 import AuthForm from "./AuthForm";
-
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState<null | string>(null);
   const [showModal, setShowModal] = useState(false);
+  const { data: session } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session?.user) {
+      setShowModal(false);
+      if (session.user.role === "admin") {
+        router.push("/admin");
+      } else {
+        router.push("/");
+      }
+    }
+  }, [session, router]);
 
   return (
     <>
@@ -155,12 +170,34 @@ export default function Navbar() {
               >
                 Liên hệ
               </Link>
-              <button
-                onClick={() => setShowModal(true)}
-                className="px-5 py-2 bg-gradient-to-r from-blue-500 to-fuchsia-500 text-white rounded-lg font-semibold shadow hover:scale-105"
-              >
-                Đăng nhập / Đăng ký
-              </button>
+              {session?.user ? (
+                <div className="flex items-center gap-2">
+                  <img
+                    src={session.user.image}
+                    alt="Avatar"
+                    className="w-8 h-8 rounded-full"
+                    onError={(e) =>
+                      (e.currentTarget.src = "/default-avatar.png")
+                    }
+                    width={32}
+                    height={32}
+                    title={session.user.name}
+                  />
+                  <button
+                    onClick={() => signOut()}
+                    className="px-5 py-2 bg-gradient-to-r from-blue-500 to-fuchsia-500 text-white rounded-lg font-semibold shadow hover:scale-105"
+                  >
+                    Đăng xuất
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="px-5 py-2 bg-gradient-to-r from-blue-500 to-fuchsia-500 text-white rounded-lg font-semibold shadow hover:scale-105"
+                >
+                  Đăng nhập / Đăng ký
+                </button>
+              )}
             </div>
           </div>
         </div>
