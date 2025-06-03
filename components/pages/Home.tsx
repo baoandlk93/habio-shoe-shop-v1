@@ -11,7 +11,7 @@ type Product = {
   price: string;
   image: string;
 };
-export default function Home(props: { setShowModal: (show: boolean) => void }) {
+export default function Home() {
   const slides = [
     {
       id: 1,
@@ -88,7 +88,6 @@ export default function Home(props: { setShowModal: (show: boolean) => void }) {
     if (auth === "required") {
       toast.warning("Bạn cần đăng nhập để truy cập trang này!");
       // Mở modal đăng nhập
-      props.setShowModal(true); // Nếu bạn truyền setShowModal qua props
       // Xoá query để tránh lặp lại toast khi refresh
       router.replace("/", { scroll: false });
     }
