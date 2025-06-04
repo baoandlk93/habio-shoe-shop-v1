@@ -1,7 +1,7 @@
-import { User } from "@/server/entity";
+import { IUser } from "@/server/entity";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-export default function AdminNavbar({ user }: { user: User }) {
+export default function AdminNavbar({ user }: { user: IUser }) {
   return (
     <header className="w-full h-16 px-6 flex items-center justify-between bg-white/80 shadow sticky top-0 z-20 backdrop-blur">
       {/* Logo hoặc tên hệ thống */}

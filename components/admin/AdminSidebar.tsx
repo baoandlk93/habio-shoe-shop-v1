@@ -2,7 +2,7 @@ import Link from "next/link";
 import { CiSettings } from "react-icons/ci";
 export default function AdminSidebar() {
   return (
-    <aside className="w-60  min-h-screen bg-gradient-to-b from-blue-500 to-fuchsia-500 text-white shadow-md flex flex-col justify-between px-4 py-8">
+    <aside className="w-60  max-h-screen  bg-gradient-to-b from-blue-500 to-fuchsia-500 text-white shadow-md flex flex-col justify-between px-4 py-8">
       {/* Phần trên: tiêu đề và navigation */}
       <div className="flex flex-col gap-4 overflow-y-auto">
         <h2 className="text-xl font-semibold mb-8">Admin Dashboard</h2>

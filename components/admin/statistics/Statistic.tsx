@@ -1,5 +1,5 @@
 "use client";
-import { Bar, Pie } from "react-chartjs-2";
+import { Bar, Pie, Line } from "react-chartjs-2";
 import {
   Chart,
   CategoryScale,
@@ -8,6 +8,8 @@ import {
   ArcElement,
   Tooltip,
   Legend,
+  LineElement,
+  PointElement,
 } from "chart.js";
 
 Chart.register(
@@ -16,22 +18,24 @@ Chart.register(
   BarElement,
   ArcElement,
   Tooltip,
-  Legend
+  Legend,
+  LineElement,
+  PointElement
 );
 export default function Statistic() {
   const barData = {
-    labels: ["Sản phẩm A", "Sản phẩm B", "Sản phẩm C"],
+    labels: ["Nike", "Adidas", "Puma", "Vans", "New Balance"],
     datasets: [
       {
         label: "Doanh số (trăm chiếc)",
-        data: [30, 45, 20],
+        data: [30, 45, 20, 15, 25],
         backgroundColor: "rgba(59, 130, 246, 0.6)",
       },
     ],
   };
 
   const pieData = {
-    labels: ["Đã xử lý", "Chưa xử lý"],
+    labels: ["  Đã xử lý", "Chưa xử lý"],
     datasets: [
       {
         data: [120, 45],
@@ -43,8 +47,21 @@ export default function Statistic() {
     ],
   };
 
+  const lineData = {
+    labels: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6"],
+    datasets: [
+      {
+        label: "Doanh thu (triệu đồng)",
+        data: [120, 150, 180, 210, 240, 270],
+        borderColor: "rgba(59, 130, 246, 1)",
+        borderWidth: 2,
+        fill: false,
+      },
+    ],
+  };
+
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="bg-white rounded-lg shadow p-6">
         <h2 className="text-lg font-semibold mb-4">Doanh số sản phẩm</h2>
         <Bar data={barData} />
@@ -53,7 +70,10 @@ export default function Statistic() {
         <h2 className="text-lg font-semibold mb-4">Tình trạng đơn hàng</h2>
         <Pie data={pieData} />
       </div>
-      {/* Thêm các biểu đồ khác tùy ý */}
+      <div className="bg-white rounded-lg shadow p-6">
+        <h2 className="text-lg font-semibold mb-4">Doanh thu</h2>
+        <Line data={lineData} />
+      </div>
     </div>
   );
 }

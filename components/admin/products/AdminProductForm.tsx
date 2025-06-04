@@ -1,20 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
-import { Product } from "@/server/entity";
+import { IProduct, ICategory } from "@/server/entity";
 export default function AdminProductForm({
   initialData,
   onSubmit,
   onClose,
 }: {
-  initialData: Product | null;
-  onSubmit: (data: Product) => void;
+  initialData: IProduct | null;
+  onSubmit: (data: IProduct) => void;
   onClose: () => void;
 }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState<ICategory | "">("");
   const [stock, setStock] = useState("");
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export default function AdminProductForm({
       setPrice("");
       setImage("");
       setDescription("");
-      setCategory("");
+      setCategory(null);
       setStock("");
     }
   }, [initialData]);
@@ -44,7 +44,7 @@ export default function AdminProductForm({
       price: Number(price),
       image,
       description,
-      category,
+      category: category!,
       stock: Number(stock),
     });
     onClose();
@@ -98,6 +98,8 @@ export default function AdminProductForm({
               <img
                 src={image}
                 alt="Preview"
+                width={100}
+                height={100}
                 className="h-24 w-24 object-cover rounded-lg border shadow"
               />
             </div>
@@ -116,14 +118,21 @@ export default function AdminProductForm({
         </div>
         <div>
           <label className="block text-gray-700 font-medium mb-1">Loại</label>
-          <input
-            type="text"
+          <select
             className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
             value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            onChange={(e) => setCategory(e.target.value as ICategory)}
             required
-            placeholder="Nhập loại sản phẩm..."
-          />
+          >
+            <option value="" disabled>
+              Chọn loại sản phẩm...
+            </option>
+            {Object.entries(ICategory).map(([key, value]) => (
+              <option key={key} value={value}>
+                {value}
+              </option>
+            ))}
+          </select>
         </div>
         <div>
           <label className="block text-gray-700 font-medium mb-1">

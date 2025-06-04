@@ -1,27 +1,28 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { supabaseClient } from '@/lib/supabase/client';
 
-let products = [
-  { id: 1, name: "Nike Air", price: "2.000.000đ" },
-  { id: 2, name: "Adidas Ultra Boost", price: "2.500.000đ" },
-  { id: 3, name: "Converse Classic", price: "1.100.000đ" },
-  { id: 4, name: "Puma Suede", price: "1.500.000đ" },
-  { id: 5, name: "Nike Air Max", price: "2.000.000đ" },
-  { id: 6, name: "Nike Air Max", price: "2.000.000đ" },
-  { id: 7, name: "Nike Air Max", price: "2.000.000đ" },
-  { id: 8, name: "Nike Air Max", price: "2.000.000đ" },
-  { id: 9, name: "Nike Air Max", price: "2.000.000đ" },
-  { id: 10, name: "Nike Air Max", price: "2.000.000đ" },
-];
 
 // GET: Lấy danh sách sản phẩm
-export async function GET() {
-  const { data, error } = await supabaseClient.from("product").select("*");
+export async function GET(request: NextRequest) {
+  const from = Number(request.nextUrl.searchParams.get("from") || "0");
+  const to = Number(request.nextUrl.searchParams.get("to") || "9");
+  const category = request.nextUrl.searchParams.get("category") || "";
+  const name = request.nextUrl.searchParams.get("name") || "";
+  let query = supabaseClient.from("product").select("*");
+  if (category) {
+    query = query.eq("category", category);
+  }
+  if (name) {
+    query = query.ilike("name", `%${name}%`);
+  }
+  query = query.range(from, to);
+  const { data, error } = await query;
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
   return NextResponse.json(data);
 }
+
 
 // POST: Thêm sản phẩm
 export async function POST(request: NextRequest) {

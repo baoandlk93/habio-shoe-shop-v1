@@ -3,28 +3,64 @@ import { useState } from "react";
 import AdminProductTable from "@/components/admin/products/AdminProductTable";
 import AdminProductForm from "@/components/admin/products/AdminProductForm";
 import Modal from "@/components/Modal";
-import { Product } from "@/server/entity";
+import { IProduct, ICategory } from "@/server/entity";
 import { toast } from "react-toastify";
+import { supabaseClient } from "@/lib/supabase/client";
+import { faker } from "@faker-js/faker";
 
 export default function AdminProductPage() {
   const [open, setOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [editData, setEditData] = useState<Product | null>(null);
+  const [editData, setEditData] = useState<IProduct | null>(null);
   const [isFetching, setIsFetching] = useState(false);
-  const [productToDelete, setProductToDelete] = useState<Product | null>(null);
+  const [productToDelete, setProductToDelete] = useState<IProduct | null>(null);
+
+  const productsToInsert = Array.from({ length: 1000 }, () => ({
+    name: faker.commerce.productName(),
+    price: faker.commerce.price(),
+    image: faker.image.url(),
+    description: faker.lorem.sentence(),
+    category: faker.helpers.arrayElement([
+      ICategory.SHOE,
+      ICategory.BOOT,
+      ICategory.SANDAL,
+      ICategory.SNEAKER,
+    ]),
+    stock: faker.number.int({ min: 0, max: 100 }),
+  }));
+  async function addProductsInBulk() {
+    try {
+      const { data, error } = await supabaseClient
+        .from("product")
+        .insert(productsToInsert);
+
+      if (error) {
+        console.error("Lỗi khi thêm dữ liệu hàng loạt:", error);
+        toast.error("Có lỗi xảy ra khi thêm dữ liệu!");
+      } else {
+        console.log("Thêm thành công 1000 sản phẩm!");
+        toast.success("Thêm thành công 1000 sản phẩm!");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+    }
+  }
 
   const handleAdd = () => {
     setEditData(null); // Không truyền dữ liệu ban đầu => thêm mới
     setOpen(true);
+    setIsFetching(false);
   };
 
-  const handleEdit = (product: Product) => {
+  const handleEdit = (product: IProduct) => {
     setEditData(product); // Truyền dữ liệu sản phẩm để sửa
     setOpen(true);
+    setIsFetching(false);
   };
-  const handleDelete = async (product: Product) => {
+  const handleDelete = async (product: IProduct) => {
     setProductToDelete(product);
     setDeleteModal(true);
+    setIsFetching(false);
   };
 
   const handleDeleteConfirm = async () => {
@@ -42,7 +78,7 @@ export default function AdminProductPage() {
     }
   };
 
-  const handleSubmit = async (formData: Product) => {
+  const handleSubmit = async (formData: IProduct) => {
     if (editData) {
       const updatedProduct = {
         ...editData,
@@ -86,11 +122,10 @@ export default function AdminProductPage() {
   };
 
   return (
-    <div className="p-8 max-w-full mx-auto">
-      <h1 className="text-xl font-bold mb-4">Quản lý sản phẩm</h1>
+    <div className="p-2 pt-0 max-w-full mx-auto">
       <button
         onClick={handleAdd}
-        className="mb-4 px-4 py-2 bg-blue-600 text-white rounded"
+        className="mb-2 px-4 py-2 text-xs bg-blue-600 text-white rounded-full"
       >
         Thêm sản phẩm
       </button>

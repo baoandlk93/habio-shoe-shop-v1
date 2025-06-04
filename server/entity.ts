@@ -1,23 +1,22 @@
-export interface User {
-    id: string;
+export interface IUser {
+    id: number;
     name: string;
     password: string;
-    role: string;
+    role: IRole;
     username: string;
-    
 }
 
-export interface Product {
+export interface IProduct {
     id: number;
     name: string;
     price: number;
     image: string;
     description: string;
-    category: string;
+    category: ICategory;
     stock: number;
 }
 
-export interface Order {
+export interface IOrder {
     id: number;
     userId: string;
     productId: number;
@@ -26,11 +25,29 @@ export interface Order {
     createdAt: Date;
 }
 
-export interface CartItem {
+export interface ICartItem {
     id: number;
     name: string;
     price: number;
     image: string;
     quantity: number;
+}
+export interface ICart {
+    id: number;
+    userId: string;
+    cartItems: CartItem[];
+    quantity: number;
+    totalPrice: number;
+}
+export enum IRole {
+        ADMIN,
+        USER,
+        MANAGER
+}
+export enum ICategory {
+    SHOE = "Giày",
+    BOOT = "Giày boot",
+    SANDAL = "Giày dép",
+    SNEAKER = "Giày thể thao",
 }
 
