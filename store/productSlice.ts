@@ -1,11 +1,9 @@
 // store/cartSlice.ts
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Product } from '@/server/entity';
-
-
+import { IProduct } from '@/server/entity';
 
 interface ProductState {
-  items: Product[];
+  items: IProduct[];
 }
 
 const initialState: ProductState = {
@@ -16,10 +14,10 @@ const productSlice = createSlice({
   name: 'product',
   initialState,
   reducers: {
-    setProduct(state, action: PayloadAction<Product[]>) {
+    setProduct(state, action: PayloadAction<IProduct[]>) {
       state.items = action.payload;
     },
-    addToProduct(state, action: PayloadAction<Product>) {
+    addToProduct(state, action: PayloadAction<IProduct>) {
       // Logic thêm hoặc cập nhật số lượng
       const item = state.items.find(i => i.id === action.payload.id);
       if (item) {

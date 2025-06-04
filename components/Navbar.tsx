@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import Cart from "./Cart";
-import { CartItem } from "../server/entity";
+import { ICartItem } from "../server/entity";
 export default function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [submenuOpen, setSubmenuOpen] = useState<null | string>(null);
@@ -17,7 +17,7 @@ export default function Navbar() {
   const router = useRouter();
   const [cartItemCount, setCartItemCount] = useState(1);
   const [openCartModal, setOpenCartModal] = useState(false);
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [cartItems, setCartItems] = useState<ICartItem[]>([]);
 
   const onUpdateQuantity = (id: number, quantity: number) => {
     const updatedCartItems = cartItems.map((item) =>

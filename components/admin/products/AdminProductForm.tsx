@@ -30,7 +30,7 @@ export default function AdminProductForm({
       setPrice("");
       setImage("");
       setDescription("");
-      setCategory(null);
+      setCategory("");
       setStock("");
     }
   }, [initialData]);
@@ -44,7 +44,7 @@ export default function AdminProductForm({
       price: Number(price),
       image,
       description,
-      category: category!,
+      category: category as ICategory,
       stock: Number(stock),
     });
     onClose();

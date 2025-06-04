@@ -1,5 +1,5 @@
 export interface IUser {
-    id: number;
+    id: string;
     name: string;
     password: string;
     role: IRole;
@@ -35,14 +35,14 @@ export interface ICartItem {
 export interface ICart {
     id: number;
     userId: string;
-    cartItems: CartItem[];
+    cartItems: ICartItem[];
     quantity: number;
     totalPrice: number;
 }
 export enum IRole {
-        ADMIN,
-        USER,
-        MANAGER
+    ADMIN = "admin",
+    USER = "user",
+    MANAGER = "manager"
 }
 export enum ICategory {
     SHOE = "Giày",

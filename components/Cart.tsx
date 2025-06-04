@@ -1,5 +1,5 @@
 import React from "react";
-import { CartItem } from "../server/entity";
+import { ICartItem } from "../server/entity";
 
 const Cart = ({
   cartItems,
@@ -7,7 +7,7 @@ const Cart = ({
   onRemove,
   setOpenCartModal,
 }: {
-  cartItems: CartItem[];
+  cartItems: ICartItem[];
   onUpdateQuantity: (id: number, quantity: number) => void;
   onRemove: (id: number) => void;
   setOpenCartModal: (open: boolean) => void;
@@ -16,7 +16,7 @@ const Cart = ({
   const safeCartItems = Array.isArray(cartItems) ? cartItems : [];
 
   const total = safeCartItems.reduce(
-    (sum: number, item: CartItem) => sum + item.price * item.quantity,
+    (sum: number, item: ICartItem) => sum + item.price * item.quantity,
     0
   );
 
@@ -39,7 +39,7 @@ const Cart = ({
       ) : (
         <>
           <ul className="flex-1 overflow-y-auto max-h-72 pr-1">
-            {safeCartItems.map((item: CartItem) => (
+            {safeCartItems.map((item: ICartItem) => (
               <li
                 key={item.id}
                 className="flex justify-between items-center mb-4 border-b last:border-b-0 pb-3 last:pb-0"

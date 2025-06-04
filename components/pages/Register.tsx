@@ -12,7 +12,7 @@ export default function Register() {
   const { register, handleSubmit } = useForm<IFormInput>();
   const onSubmit: SubmitHandler<IFormInput> = (data) => {
     const user: IUser = {
-      id: 0,
+      id: "",
       name: data.name,
       username: data.username,
       password: data.password,

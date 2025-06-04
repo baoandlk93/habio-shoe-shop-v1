@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { User } from "@/server/entity";
+import { IRole, IUser } from "@/server/entity";
  const authOptions = {
   providers: [
     CredentialsProvider({
@@ -10,8 +10,8 @@ import { User } from "@/server/entity";
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials, req) {
-        const userAdmin: User = { id: "1", name: "admin", password: "123456", role: "admin", username: "admin" };
-        const userCustomer: User = { id: "1", name: "customer", password: "123456", role: "customer", username: "customer" };
+        const userAdmin: IUser = { id: "1", name: "admin", password: "123456", role: IRole.ADMIN, username: "admin" };
+        const userCustomer: IUser = { id: "2", name: "customer", password: "123456", role: IRole.USER, username: "customer" };
         if (
           credentials?.username === "admin" && 
           credentials?.password === "123456"
